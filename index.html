@@ -1,60 +1,122 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-
+<!DOCTYPE html> 
+<html lang="en">
 <head>
-<title>Wii U Exploit Index</title>
-<link rel="stylesheet" type="text/css" href="main.css" />
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+
+<link rel="shortcut icon" href="myicon.ico" type="image/x-icon" />
+
+<meta charset="utf-8" />
+<title>WiiuBru</title>
+<style>
+canvas {
+  display:block;
+  margin:auto;
+  border:1px dashed black;
+  background:url(images/menu.png)
+}
+
+</style>
+<script src="js/jquery.min.js" type="text/javascript"></script>
+
+<script>
+var context;
+var rightKey = false;
+var leftKey = false;
+var upKey = false;
+var downKey = false;
+var block_x;
+var block_y;
+var block_h = 180;
+var block_w = 249;
+var imageObj = new Image();
+imageObj.src = 'images/emphasis.png';
+var minx = 46;
+var maxx = 662;
+var miny = 230;
+var maxy = 230;
+
+
+
+function init() {
+  //canvas = document.getElementById('canvas');
+  context = $('#canvas')[0].getContext('2d');
+  WIDTH = $('#canvas').width();
+  HEIGHT = $('#canvas').height();
+  block_x = 46;
+  block_y = 230;
+  setInterval('draw()', 180);
+}
+function clearCanvas() {
+  context.clearRect(0,0,WIDTH,HEIGHT);
+}
+
+function rect(x,y,w,h) {
+
+  context.beginPath();
+
+ context.rect(x,y,w,h);
+  context.endPath();
+}
+
+function draw() {
+  clearCanvas();
+  if (rightKey) block_x += 308;
+  else if (leftKey) block_x -= 308;
+  if (upKey) block_y -= 214;
+  else if (downKey) block_y += 214;
+  if (block_x <= minx) block_x =minx;
+  if (block_x >= maxx) block_x = maxx;
+  if (block_y <= miny) block_y = miny;
+  if (block_y >= maxy) block_y = maxy;
+  if (block_x == maxx) {miny = 25;}
+   else
+  {miny = maxy;}
+  if (block_x >= maxx && block_y <= 25) {minx = 354;}
+  else
+  {minx = 46;}
+  context.fillStyle = "cyan";
+    context.globalAlpha=0.3;
+   context.fillRect(block_x,block_y,block_w,block_h);
+   context.globalAlpha=1.0;
+ // context.drawImage(imageObj, block_x-18, block_y-15,285 ,220);
+   context.fillStyle = "black";
+   context.font = "12px Arial";
+ context.fillText("Last updated by pwsincd on 23/01/2016 @ 17:00",10,430);
+
+}
+
+
+function onKeyDown(evt) {
+  if (evt.keyCode == 39) rightKey = true;
+  else if (evt.keyCode == 37) leftKey = true;
+  if (evt.keyCode == 38) upKey = true;
+  else if (evt.keyCode == 40) downKey = true;
+  
+    if (evt.keyCode == 13 && block_x == 46 && block_y == 25) window.location = ''; 
+ if (evt.keyCode == 13 && block_x ==354 && block_y == 25) window.location = ''; 
+  if (evt.keyCode == 13 && block_x == 662 && block_y == 25) window.location = 'wiiubru_offline.zip'; 
+  
+    if (evt.keyCode == 13 && block_x ==46 && block_y == 230) window.location = '532.html'; 
+      if (evt.keyCode == 13 && block_x ==354 && block_y == 230) window.location = '540.html';  
+            if (evt.keyCode == 13 && block_x ==662 && block_y == 230) window.location = '55.html';  
+      
+}
+
+function onKeyUp(evt) {
+  if (evt.keyCode == 39) rightKey = false;
+  else if (evt.keyCode == 37) leftKey = false;
+  if (evt.keyCode == 38) upKey = false;
+  else if (evt.keyCode == 40) downKey = false;
+}
+
+$(document).keydown(onKeyDown);
+$(document).keyup(onKeyUp);
+
+</script>
 </head>
 
-<body>
+<body onload="init();">
 
-<div id="position">
-<table style="width: 100%; background-image:url('images/td.jpg')" id="titletd">
-	<tr>
-		<td align="center" style="color: #FFFFFF; ">Kernel Exploits</td>
-	</tr>
-</table>
-<table style="width: 100%; background-color:black;">
-	<tr>
-		<td style="width: 50%;" align="center"><a href="../mlt.github.io/ldk3/payload532.html">Multi Kernel MLT</a></td>
-		<td style="width: 50%;" align="center"><a href="../mlt.github.io/loghook/payload532.html">loghook</a></td>
-	</tr>
-</table>
-<table style="width: 100%; background-image:url('images/td.jpg')" id="titletd">
-	<tr>
-		<td align="center" style="color: #FFFFFF; ">Payloads</td>
-	</tr>
-</table>
-<table style="width: 100%; background-color:black;">
-	<tr>
-		<td align="center"><a href="../mlt.github.io/pygec/index.html">pyGecko</a></td>
-		<td align="center"><a href="../mlt.github.io/tcpgec/index.html">TCPGecko (FSA)</a></td>
-		<td align="center"><a href="../mlt.github.io/cafiine/index.html">Cafiine</a></td>
-		<td align="center"><a href="../mlt.github.io/wi/payload532.html">WUP Installer</a></td>
-		<td align="center"><a href="../mlt.github.io/nnu/index.html">NNU-Patch</a></td>
-		<td align="center"><a href="../mlt.github.io/loadiine/index.html">Loadiine (golden45)</a></td>
-		<td align="center"><a href="../mlt.github.io/ld1b/payload532.html">Loadiine (MLT)</a></td>
-
-	</tr>
-</table>
-<table style="width: 100%; color: #FFFFFF; background-image:url('images/td.jpg')" id="titletd">
-	<tr>
-		<td align="center">Files</td>
-	</tr>
-</table>
-<table style="width: 100%; background-color:black;">
-	<tr style="color:white;">
-		<td align="center"><a href="../files/cafiine532-v1.2-dumpfiles.zip">
-		Cafiine (5.3.2) v1.2 (golden45 dump version)</a></td>
-		<td align="center"><a href="../files/TCPGeckoClient.7z">Gecko DotNET 
-		(FSA)</a></td>
-		<td align="center"><a href="../files/spoofpack.zip">USA/EUR/JPN Spoof 
-		Pack</a></td>
-		<td align="center"><a href="https://github.com/EclipseSin/EclipseSin.github.io/raw/master/files/NUSGrabber.rar">NusGrabber</a></td>
-	</tr>
-</div>
+<canvas id="canvas" width="964" height="440">Update your browser fool</canvas>
 
 </body>
-
 </html>
